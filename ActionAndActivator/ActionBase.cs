@@ -34,6 +34,9 @@ public abstract class ActionBase : MonoBehaviour
 public abstract class ActivatorBase : MonoBehaviour
 {
 	[SerializeField]
+	private bool NoDraw;
+
+	[SerializeField]
 	private bool _isSignal;
 
 	[SerializeField]
@@ -62,6 +65,8 @@ public abstract class ActivatorBase : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
+		if(NoDraw) return;
+
 		if(_action != null)
 		{
 			Gizmos.color = IsSignal ? Color.red : Color.green;
