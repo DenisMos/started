@@ -11,6 +11,9 @@ namespace Assets.ActionAndActivator.Activator
 	{
 		public KeyCode KeyCode = KeyCode.F;
 
+		public GameObject Player;
+		public float Distance = 1;
+
 		public Sprite Sprite1;
 		public Sprite Sprite2;
 
@@ -18,11 +21,18 @@ namespace Assets.ActionAndActivator.Activator
 
 		private void Start()
 		{
+			if(Player == null)
+			{
+				Player = GameObject.FindGameObjectWithTag("Player");
+			}
+
 			SpriteRenderer = this.GetComponent<SpriteRenderer>();
 		}
 
 		private void Update()
 		{
+			if(transform.GetDistance2D(Player.transform) >= Distance) return;
+
 			if(Input.GetKeyDown(KeyCode))
 			{
 				IsSignal = !IsSignal;
