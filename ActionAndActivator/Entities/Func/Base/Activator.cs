@@ -2,31 +2,33 @@
 using Assets.Scripts.Entities.Func.Utilits;
 using System;
 using System.Linq;
+
 using UnityEngine;
-using UnityEngine.VFX;
 
 namespace Assets.Scripts.Entities
 {
+
 	public class ActivatorBase3D : MonoBehaviour
 	{
-		[SerializeField]
-		private ActionBase3D[] _actions;
+		[Obsolete("Используйте 'Action With Params'")]
+		[SerializeField] private ActionBase3D[] _actions;
+		[SerializeField] private ActionWithContext[] _actionWithParams;
 
-		public ActionBase3D[] Actions => _actions;
-
-		public virtual void Execute(SwitcherTriggerContext context)
-		{
-			foreach(var action in _actions)
-			{
-				action.Execute(this, context);
-			}
-		}
+		public ActionWithContext[] Action => _actionWithParams;
 
 		public virtual void Execute()
 		{
-			foreach(var action in _actions)
-			{ 
-				action.Execute(this);
+			foreach(var action in _actionWithParams)
+			{
+				action.Action.Execute(this, action.Context);
+			}
+		}
+
+		public virtual void Execute(SwitcherTriggerContext context)
+		{
+			foreach(var action in _actionWithParams)
+			{
+				action.Action.Execute(this, action.Context);
 			}
 		}
 
@@ -34,13 +36,15 @@ namespace Assets.Scripts.Entities
 
 		private void OnDrawGizmos()
 		{
-			if(_actions != null)
+			if(_actionWithParams != null)
 			{
-				foreach(var item in _actions)
+				foreach(var item in _actionWithParams)
 				{
-					if(item == null) continue;
+					if(item == null || item.Action == null) continue;
 
-					Gizmos.DrawLine(transform.position, item.transform.position);
+					item.name = $"{item.Action} : {item.Context}";
+
+					Gizmos.DrawLine(transform.position, item.Action.transform.position);
 				}
 			}
 		}

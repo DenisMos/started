@@ -7,7 +7,10 @@ namespace Assets.Scripts.Entities.Func
 	{
 		bool _enabled = false;
 
+		[Header("Olds Activator")]
 		[SerializeField] private SwitcherTriggerContext _command = SwitcherTriggerContext.Toggle;
+		
+		[Header("GUI")]
 		[SerializeField] private Texture _texture;
 		[SerializeField] private KeyCode _keyCode = KeyCode.F;
 
@@ -17,7 +20,7 @@ namespace Assets.Scripts.Entities.Func
 
 			if(Input.GetKeyDown(_keyCode))
 			{
-				Execute(_command);
+				Execute();
 			}
 		}
 

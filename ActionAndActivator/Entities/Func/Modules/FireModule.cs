@@ -16,6 +16,6 @@ public class FireModule : ActivatorBase3D, IActionOtherModule
 
 	public override void Execute(SwitcherTriggerContext switcher)
 	{
-		Execute();
+		Execute(switcher);
 	}
 }
