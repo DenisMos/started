@@ -32,6 +32,22 @@ namespace Assets.Scripts.Entities.Func.Utilits
 		}
 	}
 
+	public class VectorInterpolateSLerp : IInterpolateAlgs<Vector3>
+	{
+		public Vector3 Interp(Vector3 current, Vector3 end, float t)
+		{
+			var dir = end - current;
+
+			if(dir.magnitude < t)
+			{
+				return end;
+			}
+
+			return Vector3.SlerpUnclamped(current, end, t);
+		}
+	}
+
+
 	public static class VectorInterpolate
 	{
 		public static IInterpolateAlgs<Vector3> CreateAlgs(MethodsAction methodsAction)
@@ -42,6 +58,8 @@ namespace Assets.Scripts.Entities.Func.Utilits
 					return new VectorInterpolateLinear();
 				case MethodsAction.Lerp:
 					return new VectorInterpolateLerp();
+				case MethodsAction.Slerp:
+					return new VectorInterpolateSLerp();
 				default: return null;
 			}
 		}

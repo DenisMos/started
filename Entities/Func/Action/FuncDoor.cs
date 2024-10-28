@@ -122,6 +122,10 @@ public class FuncDoor : ActionBase3D
 				_coroutine = StartCoroutine(Open());
 			}
 		}
+		else if(context == SwitcherTriggerContext.Wait)
+		{
+			_toggle = !_toggle;
+		}
 		return true;
 	}
 }

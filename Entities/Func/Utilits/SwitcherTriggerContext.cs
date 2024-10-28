@@ -12,6 +12,7 @@ namespace Assets.Scripts.Entities.Func.Utilits
 		Block,
 		Unblock,
 		Wait,
+		Stay,
 	}
 
 	public enum EqualsMode

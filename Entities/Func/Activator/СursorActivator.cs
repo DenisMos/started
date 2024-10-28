@@ -1,7 +1,9 @@
 using Assets.Scripts.Entities;
 using Assets.Scripts.Entities.Func.Utilits;
+
 using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 
 public class СursorActivator : ActivatorBase3D
@@ -14,6 +16,7 @@ public class СursorActivator : ActivatorBase3D
 	[Header("Messages -----")]
 	[Multiline]
 	[SerializeField] private string _message;
+	[SerializeField] private GUIStyle _style;
 	[SerializeField] private Rect _rect = new Rect(0.5f, 0.5f, 100f, 100f);
 	[Header("Activators -----")]
 	[SerializeField] private SwitcherTriggerContext _mode;
@@ -110,7 +113,15 @@ public class СursorActivator : ActivatorBase3D
 			if(string.IsNullOrEmpty(_message)) return;
 
 			var rect = new Rect(_rect.x * Screen.width - _rect.width / 2, Screen.height * _rect.y - _rect.height / 2, _rect.width, _rect.height);
-			GUI.TextField(rect, _message);
+
+			if(!string.IsNullOrEmpty(_style.name))
+			{
+				GUI.TextField(rect, _message, _style);
+			}
+			else
+			{
+				GUI.TextField(rect, _message);
+			}
 		}
 	}
 }
