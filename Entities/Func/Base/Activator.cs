@@ -1,23 +1,36 @@
 ﻿using Assets.Scripts.Entities.Func;
 using Assets.Scripts.Entities.Func.Utilits;
-using System;
 using System.Linq;
 
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Entities
 {
-
 	public class ActivatorBase3D : MonoBehaviour
 	{
-		[Obsolete("Используйте 'Action With Params'")]
-		[SerializeField] private ActionBase3D[] _actions;
+		#region Activator
+
+		[Header("Activator API")]
 		[SerializeField] private ActionWithContext[] _actionWithParams;
+		[Header("Unity API")]
+		[SerializeField] private UnityEvent _events;
+
+		#endregion
 
 		public ActionWithContext[] Action => _actionWithParams;
 
+		private void ExecuteUnityEvent()
+		{
+			if(_events != null)
+			{
+				_events.Invoke();
+			}
+		}
+
 		public virtual void Execute()
 		{
+			ExecuteUnityEvent();
 			foreach(var action in _actionWithParams)
 			{
 				action.Action.Execute(this, action.Context);
@@ -26,6 +39,7 @@ namespace Assets.Scripts.Entities
 
 		public virtual void Execute(SwitcherTriggerContext context)
 		{
+			ExecuteUnityEvent();
 			foreach(var action in _actionWithParams)
 			{
 				action.Action.Execute(this, action.Context);
