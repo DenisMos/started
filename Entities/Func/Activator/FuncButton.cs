@@ -1,14 +1,10 @@
-﻿using Assets.Scripts.Entities.Func.Utilits;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Entities.Func
 {
 	public class FuncButton : ActivatorBase3D
 	{
 		bool _enabled = false;
-
-		[Header("Olds Activator")]
-		[SerializeField] private SwitcherTriggerContext _command = SwitcherTriggerContext.Toggle;
 		
 		[Header("GUI")]
 		[SerializeField] private Texture _texture;
